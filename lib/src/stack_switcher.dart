@@ -134,7 +134,7 @@ class _StackSwitcherState extends State<StackSwitcher> {
 
   @override
   void didUpdateWidget(StackSwitcher old) {
-    if (widget.child != old.child) {
+    if (widget.child != old.child && widget.children.length != _keys.length) {
       _buildChildren();
     }
 
