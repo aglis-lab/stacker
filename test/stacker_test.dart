@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stacker/stacker.dart';
+import 'package:stacker2/stacker.dart';
 
 void main() {
   final containerA =

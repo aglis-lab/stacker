@@ -1,6 +1,7 @@
 name: stacker_example
 description: The example project for the stacker package.
 version: 1.0.0+1
+publish_to: none
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -9,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_color_models: ^0.3.3+1
-  stacker:
+  stacker2:
     path: ../
 
 dev_dependencies:

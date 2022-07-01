@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:stacker/src/fade_translate.dart';
+import 'package:stacker2/src/fade_translate.dart';
 import 'stack_base.dart';
 import 'stack_switcher.dart';
 

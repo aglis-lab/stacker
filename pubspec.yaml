@@ -1,12 +1,12 @@
-name: stacker
+name: stacker2
 description: >-
   A collection of 3 widgets that stack their children, displaying a
   single child at a time, transitioning between children when a different
   child is displayed.
 
-  Stacker can be used modularly as a component, to drive single-page apps,
+  Stacker2 can be used modularly as a component, to drive single-page apps,
   or to control multi-step flows within a widget or page.
-version: 0.0.1
+version: 0.0.1+2
 homepage: https://github.com/aglis-lab/stacker
 
 environment:

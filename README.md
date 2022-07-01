@@ -10,7 +10,7 @@ or to control multi-step flows within a widget or page.
 # Usage
 
 ```dart
-import 'package:stacker/stacker.dart';
+import 'package:stacker2/stacker.dart';
 ```
 
 ## StackSwapper

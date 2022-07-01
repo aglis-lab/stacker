@@ -1,7 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/widgets.dart';
-import 'package:stacker/src/fade_translate.dart';
+import 'package:stacker2/src/fade_translate.dart';
 import 'helpers/maintain_state.dart';
 import 'stack_base.dart';
 
