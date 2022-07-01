@@ -1,4 +1,3 @@
-import 'package:fade_and_translate/fade_and_translate.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'helpers/maintain_state.dart';
@@ -75,13 +74,13 @@ class Stacker extends StatefulStackBase {
   /// [MaterialApp] or [WidgetsApp] at the top of your application widget tree.
   Stacker(
     this.child, {
-    GlobalKey key,
+    GlobalKey? key,
     Duration transitionDuration = const Duration(milliseconds: 240),
     Offset transitionTranslation = const Offset(0.0, 24.0),
     bool invertTranslations = true,
     bool transitionFirstChild = false,
-    VoidCallback onSwitchStart,
-    VoidCallback onSwitchComplete,
+    VoidCallback? onSwitchStart,
+    VoidCallback? onSwitchComplete,
     this.onForwardStart,
     this.onForwardComplete,
     this.callForwardOnBuild = true,
@@ -91,7 +90,7 @@ class Stacker extends StatefulStackBase {
     bool maintainSizes = false,
     bool maintainAnimations = false,
     bool maintainStates = false,
-    TextDirection textDirection,
+    TextDirection? textDirection,
   })  : assert(child != null),
         assert(transitionDuration != null),
         assert(transitionTranslation != null),
@@ -120,10 +119,10 @@ class Stacker extends StatefulStackBase {
   final Widget child;
 
   /// A callback executed when the transition starts while navigating forward.
-  final VoidCallback onForwardStart;
+  final VoidCallback? onForwardStart;
 
   /// A callback executed when the transition ends while navigating forward.
-  final VoidCallback onForwardComplete;
+  final VoidCallback? onForwardComplete;
 
   /// If `true`, the [onForwardStart] and [onForwardComplete] callbacks
   /// will be called when a new widget is added to the stack and when
@@ -132,10 +131,10 @@ class Stacker extends StatefulStackBase {
   final bool callForwardOnBuild;
 
   /// A callback executed when the transition starts while navigating back.
-  final VoidCallback onBackStart;
+  final VoidCallback? onBackStart;
 
   /// A callback executed when the transition ends while navigating back.
-  final VoidCallback onBackComplete;
+  final VoidCallback? onBackComplete;
 
   /// If `true`, the device back button can be used to navigate back.
   ///
@@ -149,7 +148,7 @@ class Stacker extends StatefulStackBase {
   static GlobalKey<_StackerState> _generateKey() => GlobalKey<_StackerState>();
 
   /// Returns the [key] typecast as a [GlobalKey].
-  GlobalKey<_StackerState> get _globalKey => key;
+  GlobalKey<_StackerState> get _globalKey => key as GlobalKey<_StackerState>;
 
   /// Adds a new widget to the stack and immediately transitions to it.
   ///
@@ -159,13 +158,13 @@ class Stacker extends StatefulStackBase {
   void build(
     Widget child, {
     bool clearHistory = true,
-    VoidCallback onComplete,
+    VoidCallback? onComplete,
   }) {
     assert(child != null);
     assert(clearHistory != null);
 
-    _globalKey.currentState
-        ._buildChild(child, clearHistory: clearHistory, onComplete: onComplete);
+    _globalKey.currentState!._buildChild(child,
+        clearHistory: clearHistory, onComplete: onComplete!);
   }
 
   /// Inserts a child into the stack before the one currently being
@@ -173,7 +172,7 @@ class Stacker extends StatefulStackBase {
   void prepend(Widget child) {
     assert(child != null);
 
-    _globalKey.currentState._prependChild(child);
+    _globalKey.currentState!._prependChild(child);
   }
 
   /// Inserts a child into the stack after the one currently being
@@ -186,7 +185,7 @@ class Stacker extends StatefulStackBase {
     assert(child != null);
     assert(clearHistory != null);
 
-    _globalKey.currentState._appendChild(child, clearHistory: clearHistory);
+    _globalKey.currentState!._appendChild(child, clearHistory: clearHistory);
   }
 
   /// Inserts a [child] into the stack at [index], pushing
@@ -195,7 +194,7 @@ class Stacker extends StatefulStackBase {
     assert(index != null && index > 0 && index <= length);
     assert(child != null);
 
-    _globalKey.currentState._insertChild(index, child);
+    _globalKey.currentState!._insertChild(index, child);
   }
 
   /// Removes the first instance of [child] from the stack.
@@ -206,7 +205,7 @@ class Stacker extends StatefulStackBase {
   void remove(Widget child) {
     assert(child != null);
 
-    _globalKey.currentState._removeChild(child);
+    _globalKey.currentState!._removeChild(child);
   }
 
   /// Removes the child from the stack at [index].
@@ -216,7 +215,7 @@ class Stacker extends StatefulStackBase {
     assert(index != null && index > 0 && index <= length);
     assert(index != currentChild);
 
-    _globalKey.currentState._removeChildAt(index);
+    _globalKey.currentState!._removeChildAt(index);
   }
 
   /// Transitions to the previous widget in the stack.
@@ -227,8 +226,8 @@ class Stacker extends StatefulStackBase {
   ///
   /// Throws a [NavigationError] if the widget currently being
   /// displayed is the root.
-  void back({VoidCallback onComplete}) {
-    _globalKey.currentState._navigateBack(onComplete: onComplete);
+  void back({VoidCallback? onComplete}) {
+    _globalKey.currentState!._navigateBack(onComplete: onComplete!);
   }
 
   /// Returns `true` if the root widget is not the widget currently
@@ -243,8 +242,8 @@ class Stacker extends StatefulStackBase {
   ///
   /// Throws a [NavigationError] if the widget currently being
   /// displayed is the last widget in the stack.
-  void forward({VoidCallback onComplete}) {
-    _globalKey.currentState._navigateForward(onComplete: onComplete);
+  void forward({VoidCallback? onComplete}) {
+    _globalKey.currentState!._navigateForward(onComplete: onComplete!);
   }
 
   /// Returns `true` if there's at least one widget in the stack after
@@ -257,10 +256,10 @@ class Stacker extends StatefulStackBase {
   /// Only the [onSwitchStart] and [onSwitchComplete] callbacks will be called,
   /// as well as the [onComplete] callback if provided, which will be called
   /// after [onSwitchComplete].
-  void open(int index, {VoidCallback onComplete}) {
+  void open(int index, {VoidCallback? onComplete}) {
     assert(index != null && index < length);
 
-    _globalKey.currentState._open(index, onComplete: onComplete);
+    _globalKey.currentState!._open(index, onComplete: onComplete!);
   }
 
   /// Transitions to the previous widget in the stack and clears the
@@ -269,8 +268,8 @@ class Stacker extends StatefulStackBase {
   /// The [onSwitchStart], [onSwitchComplete], [onBackStart], and
   /// [onBackComlete] callbacks will be called, as well as the [onComplete]
   /// callback if provided, which will be called after the other callbacks.
-  void pop({VoidCallback onComplete}) {
-    _globalKey.currentState._popChild(onComplete: onComplete);
+  void pop({VoidCallback? onComplete}) {
+    _globalKey.currentState!._popChild(onComplete: onComplete!);
   }
 
   /// Transitions to the root widget in the stack.
@@ -281,11 +280,11 @@ class Stacker extends StatefulStackBase {
   /// Only the [onSwitchStart] and [onSwitchComplete] callbacks will be called,
   /// as well as the [onComplete] callback if provided, which will be called
   /// after [onSwitchComplete].
-  void root({bool clearHistory = false, VoidCallback onComplete}) {
+  void root({bool clearHistory = false, VoidCallback? onComplete}) {
     assert(clearHistory != null);
 
-    _globalKey.currentState
-        ._openRoot(clearHistory: clearHistory, onComplete: onComplete);
+    _globalKey.currentState!
+        ._openRoot(clearHistory: clearHistory, onComplete: onComplete!);
   }
 
   /// Removes every widget from stack after the one currently
@@ -296,14 +295,14 @@ class Stacker extends StatefulStackBase {
   void clearHistory([int skip = 0]) {
     assert(skip != null && skip >= 0);
 
-    _globalKey.currentState._clearHistory(skip);
+    _globalKey.currentState!._clearHistory(skip);
   }
 
   /// The index of the child currently being displayed.
-  int get currentChild => _globalKey.currentState?._currentChild;
+  int get currentChild => _globalKey.currentState?._currentChild as int;
 
   /// The number of children in the stack.
-  int get length => _globalKey.currentState?._children?.length;
+  int get length => _globalKey.currentState?._children.length as int;
 
   @override
   _StackerState createState() => _StackerState();
@@ -317,16 +316,16 @@ class _StackerState extends State<Stacker> {
   int _currentChild = 0;
 
   /// The callback executed when the transition starts.
-  VoidCallback _onSwitchStart;
+  VoidCallback? _onSwitchStart;
 
   /// The callback executed when the transition ends.
-  VoidCallback _onSwitchComplete;
+  VoidCallback? _onSwitchComplete;
 
   /// A controller with access to the methods that control this state.
   ///
   /// It is provided the children and can be accessed via a [BuildContext]
   /// extension, [GetStackerController].
-  StackerController _stackerController;
+  StackerController? _stackerController;
 
   @override
   void initState() {
@@ -363,7 +362,7 @@ class _StackerState extends State<Stacker> {
   void _buildChild(
     Widget child, {
     bool clearHistory = true,
-    VoidCallback onComplete,
+    VoidCallback? onComplete,
   }) {
     assert(child != null);
     assert(clearHistory != null);
@@ -382,7 +381,7 @@ class _StackerState extends State<Stacker> {
     } else {
       _onSwitchStart = widget.onSwitchStart;
       _onSwitchComplete = () {
-        if (widget.onSwitchComplete != null) widget.onSwitchComplete();
+        if (widget.onSwitchComplete != null) widget.onSwitchComplete!();
         if (onComplete != null) onComplete();
       };
     }
@@ -396,7 +395,7 @@ class _StackerState extends State<Stacker> {
   /// The [onSwitchStart], [onSwitchComplete], [onBackStart], and
   /// [onBackComlete] callbacks will be called, as well as the [onComplete]
   /// callback if provided, which will be called after the other callbacks.
-  void _popChild({VoidCallback onComplete}) {
+  void _popChild({VoidCallback? onComplete}) {
     _navigateBack(onComplete: () {
       _clearHistory();
       if (onComplete != null) onComplete();
@@ -493,7 +492,7 @@ class _StackerState extends State<Stacker> {
   ///
   /// Throws a [NavigationError] if the widget currently being
   /// displayed is the root.
-  void _navigateBack({VoidCallback onComplete}) {
+  void _navigateBack({VoidCallback? onComplete}) {
     if (_currentChild == 0) {
       throw NavigationError('Already displaying the root child. '
           'Cannot navigate any further back.');
@@ -517,7 +516,7 @@ class _StackerState extends State<Stacker> {
   ///
   /// Throws a [NavigationError] if the widget currently being
   /// displayed is the last widget in the stack.
-  void _navigateForward({VoidCallback onComplete}) {
+  void _navigateForward({VoidCallback? onComplete}) {
     if (_currentChild == _children.length - 1) {
       throw NavigationError('Already displaying the last child. '
           'Cannot navigate any further forward.');
@@ -539,14 +538,14 @@ class _StackerState extends State<Stacker> {
   /// Only the [onSwitchStart] and [onSwitchComplete] callbacks will be called,
   /// as well as the [onComplete] callback if provided, which will be called
   /// after [onSwitchComplete].
-  void _open(int child, {VoidCallback onComplete}) {
+  void _open(int child, {VoidCallback? onComplete}) {
     assert(child != null && child < _children.length);
 
     _currentChild = child;
 
     _onSwitchStart = widget.onSwitchStart;
     _onSwitchComplete = () {
-      if (widget.onSwitchComplete != null) widget.onSwitchComplete();
+      if (widget.onSwitchComplete != null) widget.onSwitchComplete!();
       if (onComplete != null) onComplete();
     };
 
@@ -564,7 +563,7 @@ class _StackerState extends State<Stacker> {
   /// other callbacks provided by the widget have been called.
   void _openRoot({
     bool clearHistory = false,
-    VoidCallback onComplete,
+    VoidCallback? onComplete,
   }) {
     assert(clearHistory != null);
 
@@ -573,7 +572,7 @@ class _StackerState extends State<Stacker> {
     _onSwitchStart = widget.onSwitchStart;
     _onSwitchComplete = () {
       if (clearHistory) _clearHistory();
-      if (widget.onSwitchComplete != null) widget.onSwitchComplete();
+      if (widget.onSwitchComplete != null) widget.onSwitchComplete!();
       if (onComplete != null) onComplete();
     };
 
@@ -598,29 +597,29 @@ class _StackerState extends State<Stacker> {
   /// Executes [widget.onSwitchStart] and [widget.onBackStart] when
   /// called by the [StackSwitcher]'s [onSwitchComplete] callback.
   void _handleSwitchBackStart() {
-    if (widget.onSwitchStart != null) widget.onSwitchStart();
-    if (widget.onBackStart != null) widget.onBackStart();
+    if (widget.onSwitchStart != null) widget.onSwitchStart!();
+    if (widget.onBackStart != null) widget.onBackStart!();
   }
 
   /// Executes [widget.onSwitchComplete] and [widget.onBackComplete] when
   /// called by the [StackSwitcher]'s [onSwitchComplete] callback.
   void _handleSwitchBackComplete() {
-    if (widget.onSwitchComplete != null) widget.onSwitchComplete();
-    if (widget.onBackComplete != null) widget.onBackComplete();
+    if (widget.onSwitchComplete != null) widget.onSwitchComplete!();
+    if (widget.onBackComplete != null) widget.onBackComplete!();
   }
 
   /// Executes [widget.onSwitchStart] and [widget.onForwardStart] when
   /// called by the [StackSwitcher]'s [onSwitchComplete] callback.
   void _handleSwitchForwardStart() {
-    if (widget.onSwitchStart != null) widget.onSwitchStart();
-    if (widget.onForwardStart != null) widget.onForwardStart();
+    if (widget.onSwitchStart != null) widget.onSwitchStart!();
+    if (widget.onForwardStart != null) widget.onForwardStart!();
   }
 
   /// Executes [widget.onSwitchComplete] and [widget.onForwardComplete] when
   /// called by the [StackSwitcher]'s [onSwitchComplete] callback.
   void _handleSwitchForwardComplete() {
-    if (widget.onSwitchComplete != null) widget.onSwitchComplete();
-    if (widget.onForwardComplete != null) widget.onForwardComplete();
+    if (widget.onSwitchComplete != null) widget.onSwitchComplete!();
+    if (widget.onForwardComplete != null) widget.onForwardComplete!();
   }
 
   /// Called by the [WillPopScope] in the [build]er to navigate back to
@@ -638,7 +637,7 @@ class _StackerState extends State<Stacker> {
   @override
   Widget build(BuildContext context) {
     return Provider<StackerController>(
-      create: (_) => _stackerController,
+      create: (_) => _stackerController!,
       child: WillPopScope(
         onWillPop: widget.backButton ? _handleBackButton : null,
         child: StackSwitcher(
@@ -713,20 +712,20 @@ typedef _GetInt = int Function();
 /// The methods for building widgets into and navigating a [Stacker].
 class StackerController {
   const StackerController._({
-    @required this.build,
-    @required this.pop,
-    @required this.prepend,
-    @required this.append,
-    @required this.insert,
-    @required this.remove,
-    @required this.removeAt,
-    @required this.back,
-    @required this.forward,
-    @required this.open,
-    @required this.root,
-    @required this.clearHistory,
-    @required _GetInt getCurrentChild,
-    @required _GetInt getLength,
+    required this.build,
+    required this.pop,
+    required this.prepend,
+    required this.append,
+    required this.insert,
+    required this.remove,
+    required this.removeAt,
+    required this.back,
+    required this.forward,
+    required this.open,
+    required this.root,
+    required this.clearHistory,
+    required _GetInt getCurrentChild,
+    required _GetInt getLength,
   })  : assert(build != null),
         assert(prepend != null),
         assert(append != null),

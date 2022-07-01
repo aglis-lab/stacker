@@ -1,5 +1,5 @@
-import 'package:fade_and_translate/fade_and_translate.dart';
 import 'package:flutter/widgets.dart';
+import 'package:stacker/src/fade_translate.dart';
 import 'stack_base.dart';
 import 'stack_switcher.dart';
 
@@ -34,14 +34,14 @@ class StackSwapper extends StackBase {
   /// [StackSwitcher] instead.
   StackSwapper(
     this.child, {
-    Key key,
+    Key? key,
     Duration transitionDuration = const Duration(milliseconds: 240),
     Offset transitionTranslation = const Offset(0.0, -24.0),
     bool invertTranslations = true,
     bool transitionFirstChild = false,
-    VoidCallback onSwitchStart,
-    VoidCallback onSwitchComplete,
-    TextDirection textDirection,
+    VoidCallback? onSwitchStart,
+    VoidCallback? onSwitchComplete,
+    TextDirection? textDirection,
   })  : assert(child != null),
         assert(transitionDuration != null),
         assert(transitionTranslation != null),
@@ -72,12 +72,12 @@ class _StackSwapperState extends State<StackSwapper> {
   /// The first widget being displayed.
   ///
   /// Transitions in when [_back] transitions out and vice versa.
-  Widget _front;
+  Widget? _front;
 
   /// The second widget being displayed.
   ///
   /// Transitions in when [_front] transitions out and vice versa.
-  Widget _back;
+  Widget? _back;
 
   @override
   void initState() {

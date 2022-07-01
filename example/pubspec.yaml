@@ -9,8 +9,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_color_models: ^0.3.3+1
-  modular_menu:
-    path: ../../modular_menu
   stacker:
     path: ../
 

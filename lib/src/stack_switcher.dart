@@ -1,5 +1,7 @@
-import 'package:fade_and_translate/fade_and_translate.dart';
+import 'dart:math';
+
 import 'package:flutter/widgets.dart';
+import 'package:stacker/src/fade_translate.dart';
 import 'helpers/maintain_state.dart';
 import 'stack_base.dart';
 
@@ -57,20 +59,20 @@ class StackSwitcher extends StatefulStackBase {
   /// [MaterialApp] or [WidgetsApp] at the top of your application widget tree.
   StackSwitcher(
     this.children, {
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     Duration transitionDuration = const Duration(milliseconds: 240),
     Offset transitionTranslation = const Offset(0.0, 24.0),
     bool invertTranslations = true,
     bool transitionFirstChild = false,
-    VoidCallback onSwitchStart,
-    VoidCallback onSwitchComplete,
+    VoidCallback? onSwitchStart,
+    VoidCallback? onSwitchComplete,
     bool maintainSizes = false,
     bool maintainAnimations = false,
     bool maintainStates = false,
-    TextDirection textDirection,
-  })  : assert(children != null && children.isNotEmpty),
-        assert(child != null && child >= 0 && child < children.length),
+    TextDirection? textDirection,
+  })  : assert(children.isNotEmpty),
+        assert(child >= 0 && child < children.length),
         assert(transitionDuration != null),
         assert(transitionTranslation != null),
         assert(invertTranslations != null),
@@ -117,7 +119,7 @@ class _StackSwitcherState extends State<StackSwitcher> {
   final List<GlobalKey> _keys = <GlobalKey>[];
 
   /// The list of children that can be displayed in the stack.
-  List<Widget> _children;
+  late List<Widget> _children;
 
   /// `true` if the widget hasn't been built yet and
   /// [widget.transitionFirstChild] is `true`.
@@ -158,12 +160,12 @@ class _StackSwitcherState extends State<StackSwitcher> {
           (child is MaintainState && child.maintainSize);
       final onStart = () {
         if (isVisible && widget.onSwitchStart != null) {
-          widget.onSwitchStart();
+          widget.onSwitchStart!();
         }
       };
       final onComplete = () {
         if (isVisible && widget.onSwitchComplete != null) {
-          widget.onSwitchComplete();
+          widget.onSwitchComplete!();
         }
       };
 

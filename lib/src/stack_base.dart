@@ -4,11 +4,11 @@ import 'package:flutter/widgets.dart';
 /// [StackSwitcher] widgets.
 abstract class StackBase extends StatefulWidget {
   const StackBase({
-    Key key,
-    @required this.transitionDuration,
-    @required this.transitionTranslation,
-    @required this.invertTranslations,
-    @required this.transitionFirstChild,
+    Key? key,
+    required this.transitionDuration,
+    required this.transitionTranslation,
+    required this.invertTranslations,
+    required this.transitionFirstChild,
     this.onSwitchStart,
     this.onSwitchComplete,
     this.textDirection,
@@ -34,33 +34,33 @@ abstract class StackBase extends StatefulWidget {
   final bool transitionFirstChild;
 
   /// A callback executed when the switch transition starts.
-  final VoidCallback onSwitchStart;
+  final VoidCallback? onSwitchStart;
 
   /// A callback executed when the switch transition has completed.
-  final VoidCallback onSwitchComplete;
+  final VoidCallback? onSwitchComplete;
 
   /// The text direction with which to resolve [alignment].
   ///
   /// Defaults to the ambient [Directionality].
   ///
   /// Copied from `Stack`.
-  final TextDirection textDirection;
+  final TextDirection? textDirection;
 }
 
 /// The base class for the [Stacker] and [StackSwitcher] widgets.
 abstract class StatefulStackBase extends StackBase {
   const StatefulStackBase({
-    Key key,
-    @required Duration transitionDuration,
-    @required Offset transitionTranslation,
-    @required bool invertTranslations,
-    @required bool transitionFirstChild,
-    VoidCallback onSwitchStart,
-    VoidCallback onSwitchComplete,
-    @required this.maintainSizes,
-    @required bool maintainAnimations,
-    @required bool maintainStates,
-    TextDirection textDirection,
+    Key? key,
+    required Duration transitionDuration,
+    required Offset transitionTranslation,
+    required bool invertTranslations,
+    required bool transitionFirstChild,
+    VoidCallback? onSwitchStart,
+    VoidCallback? onSwitchComplete,
+    required this.maintainSizes,
+    required bool maintainAnimations,
+    required bool maintainStates,
+    TextDirection? textDirection,
   })  : assert(transitionDuration != null),
         assert(transitionTranslation != null),
         assert(invertTranslations != null),
